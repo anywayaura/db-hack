@@ -13,7 +13,7 @@ def remove_chastisements(schoolkid):
     chasticements.delete()
 
 def get_subject(title, year):
-    return Subject.objects.filter(title=title, year_of_study=year)
+    return Subject.objects.filter(title=title, year_of_study=year)[0]
 
 def get_kid_lessons(schoolkid, subject):
     return Lesson.objects.filter(year_of_study=schoolkid.year_of_study, group_letter=schoolkid.group_letter, subject=subject)
@@ -24,7 +24,7 @@ def create_commendations(text, schoolkid, lessons):
                                     created=lesson.date)
 
 def main():
-    vanya = Schoolkid.objects.filter(full_name__contains='Фролов Иван')
+    vanya = Schoolkid.objects.filter(full_name__contains='Фролов Иван')[0]
     fix_marks(vanya)
     remove_chastisements(vanya)
     math = get_subject('Математика', vanya.year_of_study)
