@@ -4,9 +4,13 @@
 
 ```
 python manage.py shell
-```
-
-```
 import injection
+```
+для себя:
+```
 injection.main()
+```
+для другого ученика:
+```
+injection.main('Имя Фамилия')
 ```

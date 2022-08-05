@@ -23,13 +23,15 @@ def create_commendations(text, schoolkid, lessons):
         Commendation.objects.create(text=text, schoolkid=schoolkid, subject=lesson.subject, teacher=lesson.teacher,
                                     created=lesson.date)
 
-def main():
-    vanya = Schoolkid.objects.filter(full_name__contains='Фролов Иван')[0]
-    fix_marks(vanya)
-    remove_chastisements(vanya)
-    math = get_subject('Математика', vanya.year_of_study)
-    kid_lessons = get_kid_lessons(vanya, math)
-    create_commendations('Безупречная работа!', vanya, kid_lessons)
+
+
+def main(name='Фролов Иван'):
+    kid = Schoolkid.objects.filter(full_name__contains=name)[0]
+    fix_marks(kid)
+    remove_chastisements(kid)
+    math = get_subject('Математика', kid.year_of_study)
+    kid_lessons = get_kid_lessons(kid, math)
+    create_commendations('Безупречная работа!', kid, kid_lessons)
 
 
 if __name__ == '__main__':
