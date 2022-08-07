@@ -1,6 +1,6 @@
 # db-hack
  
-Ваня привет, положи `injection.py` рядом с файлом `manage.py`
+Ваня, Привет. Положи `injection.py` рядом с файлом `manage.py`
 
 ```
 python manage.py shell
