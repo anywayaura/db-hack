@@ -19,12 +19,21 @@ def create_commendations(text, schoolkid, lessons):
                                     created=lesson.date)
 
 def main(name='Фролов Иван'):
-    kid = Schoolkid.objects.get(full_name__contains=name)
-    fix_marks(kid)
-    remove_chastisements(kid)
-    math = Subject.objects.get(title='Математика', year_of_study=kid.year_of_study)
-    kid_lessons = Lesson.objects.filter(subject=math, year_of_study=kid.year_of_study, group_letter=kid.group_letter)
-    create_commendations('Безупречная работа!', kid, kid_lessons)
+    try:
+        kid = Schoolkid.objects.get(full_name__contains=name)
+        fix_marks(kid)
+        remove_chastisements(kid)
+        math = Subject.objects.get(title='Математика', year_of_study=kid.year_of_study)
+        kid_lessons = Lesson.objects.filter(subject=math, year_of_study=kid.year_of_study, group_letter=kid.group_letter)
+        create_commendations('Безупречная работа!', kid, kid_lessons)
+    except (AttributeError, Schoolkid.DoesNotExist):
+        print('Ученик с таким ФИО найден')
+    except (AttributeError, Subject.DoesNotExist):
+        print('Предмет не найден')
+    except (AttributeError, Schoolkid.MultipleObjectsReturned):
+        print('Уточните ФИО ученика')
+    except (AttributeError, Subject.MultipleObjectsReturned):
+        print('Слишком много математик расплодилось. Нужна конкретика')
 
 
 if __name__ == '__main__':
