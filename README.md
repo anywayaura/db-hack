@@ -8,9 +8,9 @@ import injection
 ```
 для себя:
 ```python
-injection.main()
+injection.hack()
 ```
 для другого ученика:
 ```python
-injection.main('Имя Фамилия')
+injection.hack('Имя Фамилия')
 ```

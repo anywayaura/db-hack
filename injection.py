@@ -1,12 +1,8 @@
 from datacenter.models import Schoolkid, Chastisement, Mark, Commendation, Lesson, Subject
-from random import randint
 
 
 def fix_marks(schoolkid):
-    bad_marks = Mark.objects.filter(schoolkid=schoolkid, points__in=[1, 2, 3])
-    for mark in bad_marks:
-        mark.points = randint(4, 5)
-        mark.save()
+    bad_marks = Mark.objects.filter(schoolkid=schoolkid, points__in=[1, 2, 3]).update(points=5)
 
 def remove_chastisements(schoolkid):
     chasticements = Chastisement.objects.filter(schoolkid=schoolkid)
@@ -18,7 +14,7 @@ def create_commendations(text, schoolkid, lessons):
         Commendation.objects.create(text=text, schoolkid=schoolkid, subject=lesson.subject, teacher=lesson.teacher,
                                     created=lesson.date)
 
-def main(name='Фролов Иван'):
+def hack(name='Фролов Иван'):
     try:
         kid = Schoolkid.objects.get(full_name__contains=name)
         fix_marks(kid)
@@ -35,6 +31,3 @@ def main(name='Фролов Иван'):
     except (AttributeError, Subject.MultipleObjectsReturned):
         print('Слишком много математик расплодилось. Нужна конкретика')
 
-
-if __name__ == '__main__':
-    main()
