@@ -1,13 +1,8 @@
 from datacenter.models import Schoolkid, Chastisement, Mark, Commendation, Lesson, Subject
 
-
-def fix_marks(schoolkid):
-    bad_marks = Mark.objects.filter(schoolkid=schoolkid, points__in=[1, 2, 3]).update(points=5)
-
 def remove_chastisements(schoolkid):
     chasticements = Chastisement.objects.filter(schoolkid=schoolkid)
     chasticements.delete()
-
 
 def create_commendations(text, schoolkid, lessons):
     for lesson in lessons:
@@ -17,7 +12,7 @@ def create_commendations(text, schoolkid, lessons):
 def hack(name='Фролов Иван'):
     try:
         kid = Schoolkid.objects.get(full_name__contains=name)
-        fix_marks(kid)
+        Mark.objects.filter(schoolkid=kid, points__in=[1, 2, 3]).update(points=5)
         remove_chastisements(kid)
         math = Subject.objects.get(title='Математика', year_of_study=kid.year_of_study)
         kid_lessons = Lesson.objects.filter(subject=math, year_of_study=kid.year_of_study, group_letter=kid.group_letter)
